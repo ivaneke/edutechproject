@@ -1,0 +1,30 @@
+
+//Path para crear alumno:
+localhost:8080/admin/alumnos
+
+//Body para crear un alumno:
+{
+    "rut": "11.111.111-1",
+    "mail": "correo",
+    "nombre": "nombre1",
+    "apellido": "apellido1",
+    "contrasena": "1234"
+}
+
+//GET para listar alumnos
+localhost:8080/admin/alumnos
+
+//Path para crear un curso:
+localhost:8080/gestorCursos/cursos
+
+//Body para crear un curso:
+{
+    "sigla": "A1",
+    "nombre": "Programación"
+}
+
+//GET para listar cursos
+localhost:8080/gestorCursos/cursos
+
+//Path para inscribir curso por parte del alumno
+localhost:8080/perfilAlumno/11.111.111-1/inscribir/A1
