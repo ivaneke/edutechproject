@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.Incidencia;
 import com.example.demo.model.Resena;
 import com.example.demo.service.AlumnoService;
+import com.example.demo.service.IncidenciaService;
+import com.example.demo.service.ResenaService;
 
 @RestController
-@RequestMapping("/perfilAlumno")
+@RequestMapping("/Alumno")
 public class AlumnoController {
     @Autowired
     private AlumnoService alumnoService;
@@ -25,16 +27,24 @@ public class AlumnoController {
     }
 
 // Método para crear una incidencia
-
+    @Autowired
+    private IncidenciaService incidenciaService;
     @PostMapping("/crearIncidencia")
     public String crearIncidencia(@RequestBody Incidencia incidencia) {
-        return alumnoService.crearIncidencia(incidencia);
+        return incidenciaService.crearIncidencia(incidencia);
     }
+//Método para asignar una incidencia a un alumno por rut
+    @PostMapping("/incidencias/{id}/asignar/{rut}")
+    public String crearIncidenciaConAlumno(@PathVariable int id, @PathVariable String rut) {
+        return incidenciaService.asignarIncidencia(id, rut);
+    }
+    
 
 // Método para dejar una reseña
-
+    @Autowired
+    private ResenaService resenaService;
     @PostMapping("/dejarResena")
     public String dejarResena(@RequestBody Resena resena) {
-        return alumnoService.dejarResena(resena);
+        return resenaService.dejarResena(resena);
     }
 }
