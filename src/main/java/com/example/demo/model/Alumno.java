@@ -3,6 +3,7 @@ package com.example.demo.model;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -10,7 +11,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
-
 @Entity
 public class Alumno {
     @Id
@@ -18,9 +18,14 @@ public class Alumno {
     private String mail;
     private String nombre;
     private String apellido;
+    private String email;
     private String contrasena;
+    private String fecha_nac;
+    private String activo = "true"; // Por defecto, el alumno está activo
 
-
+//Alumno se inscribe en cursos
+// Relación muchos a muchos entre Alumno y Curso
+// Cada alumno puede inscribirse en múltiples cursos y cada curso puede tener múltiples alumnos
     @ManyToMany
     @JoinTable(
         name= "alumno_curso",
@@ -28,28 +33,50 @@ public class Alumno {
         inverseJoinColumns= @JoinColumn(name= "curso_sigla")
     )
     
-    @JsonBackReference
+    @JsonBackReference("alumno-curso")
     private List<Curso> cursos;
 
 //Alumno reporta incidencia
+// Relación uno a muchos entre Alumno e Incidencia
+// Cada alumno puede tener múltiples incidencias
     @OneToMany(mappedBy="alumno")
-    @JsonBackReference
+    @JsonIgnore
     private List<Incidencia> incidencias;
-
+/*
 //Alumno deja una reseña
+// Relación uno a muchos entre Alumno y Resena
+// Cada alumno puede dejar múltiples reseñas
     @OneToMany(mappedBy="alumno")
-    @JsonBackReference
+    @JsonBackReference("alumno-resenas")
     private List<Resena> resenas;
 
+    //Un alumno se registra una única vez
+    // Relación uno a uno entre Alumno y Registro_alumno
+    // Cada alumno tiene un único registro de inscripción
+    @OneToOne(mappedBy = "alumno")
+    @JsonBackReference("alumno-registro")
+    private Registro_alumno registro;
+*/
     public Alumno() {
         this.rut = "";
         this.mail = "";
         this.nombre = "";
         this.apellido = "";
+        this.email = "";
         this.contrasena = "";
+        this.fecha_nac = "";
+        this.activo = "true"; // Por defecto, el alumno está activo
     }
 
+    // Getters y Setters
 
+    public List<Incidencia> getIncidencias() {
+        return incidencias;
+    }
+    public void setIncidencias(List<Incidencia> incidencias) {
+        this.incidencias = incidencias;
+    }
+    
     public String getRut() {
         return rut;
     }
@@ -82,12 +109,36 @@ public class Alumno {
         this.apellido = apellido;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getContrasena() {
         return contrasena;
     }
 
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+
+    public String getFecha_nac() {
+        return fecha_nac;
+    }
+
+    public void setFecha_nac(String fecha_nac) {
+        this.fecha_nac = fecha_nac;
+    }
+
+    public String getActivo() {
+        return activo;
+    }
+
+    public void setActivo(String activo) {
+        this.activo = activo;
     }
 
     public List<Curso> getCursos() {
@@ -97,20 +148,9 @@ public class Alumno {
     public void setCursos(List<Curso> cursos) {
         this.cursos = cursos;
     }
+ 
 
-    public List<Incidencia> getIncidencias() {
-        return incidencias;
-    }
+    
 
-    public void setIncidencias(List<Incidencia> incidencias) {
-        this.incidencias = incidencias;
-    }
-    
-    public List<Resena> getResenas() {
-        return resenas;
-    }
-    public void setResenas(List<Resena> resenas) {
-        this.resenas = resenas;
-    }
-    
+
 }

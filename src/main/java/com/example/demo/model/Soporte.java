@@ -1,45 +1,41 @@
 package com.example.demo.model;
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-
 @Entity
 public class Soporte {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private String rut;
     private String nombre;
     private String apellido;
+    private String email;
     private String contrasena;
-
+    private String activo = "true"; // Por defecto, el soporte está activo
+/*
     //Lista con las incidencias que ha atendido el soporte
     @OneToMany(mappedBy="soporte")
-    @JsonBackReference    
-    private List<Incidencia> incidencias; 
-
-    
+    @JsonBackReference("soporte-incidencias")
+    private List<Incidencia> incidencias;
+*/
     public Soporte() {
-        this.id = 0;
+        this.rut = "";
         this.nombre = "";
         this.apellido = "";
+        this.email = "";
         this.contrasena = "";
+        this.activo = "true"; // Por defecto, el soporte está activo
     }
 
-    public int getId() {
-        return id;
-    }
+    //Getters y Setters
 
-    public void setId(int id) {
-        this.id = id;
+    public String getRut() {
+        return rut;
     }
-
+    public void setRut(String rut) {
+        this.rut = rut;
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -56,6 +52,14 @@ public class Soporte {
         this.apellido = apellido;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getContrasena() {
         return contrasena;
     }
@@ -64,11 +68,13 @@ public class Soporte {
         this.contrasena = contrasena;
     }
 
-    public List<Incidencia> getIncidencias() {
-        return incidencias;
+    public String getActivo() {
+        return activo;
     }
 
-    public void setIncidencias(List<Incidencia> incidencias) {
-        this.incidencias = incidencias;
+    public void setActivo(String activo) {
+        this.activo = activo;
     }
+
+
 }

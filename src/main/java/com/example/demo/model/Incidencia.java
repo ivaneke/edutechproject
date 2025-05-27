@@ -1,39 +1,50 @@
 package com.example.demo.model;
 
-import java.sql.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-
 @Entity
 public class Incidencia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String descipcion;
-    private Date fecha;
+    private String descripcion;
+    private String fecha;
     private String estado;
     private String tipo;
-    private String solucion;
-
-// Soporte que atiende la incidencia
+    private String respuesta;
+/*
+    // Soporte atiende la incidencia
+    // Relación muchos a uno entre Incidencia y Soporte
+    // Cada incidencia es atendida por un único soporte, pero un soporte puede atender múltiples incidencias
     @ManyToOne
+    @JoinColumn(name = "soporte_id")
+    @JsonManagedReference("soporte-incidencias")
     private Soporte soporte; 
-
-//Alumno que reporta la incidencia
+*/
+    //Alumno reporta incidencia
+    // Relación muchos a uno entre Incidencia y Alumno
+    // Cada incidencia es reportada por un único alumno, pero un alumno puede reportar múltiples incidencias
     @ManyToOne
     private Alumno alumno;
 
+    // Constructor por defecto
     public Incidencia() {
         this.id = 0;
-        this.descipcion = "";
-        this.fecha = Date.valueOf(java.time.LocalDate.now()); // Inicializa con la fecha actual
+        this.descripcion = "";
+        this.fecha = "";
         this.estado = "";
+    }
+    
+    // Getters y Setters
+
+    public Alumno getAlumno() {
+        return alumno;
+    }
+    public void setAlumno(Alumno alumno) {
+        this.alumno = alumno;
     }
 
     public int getId() {
@@ -44,20 +55,19 @@ public class Incidencia {
         this.id = id;
     }
 
-    public String getDescipcion() {
-        return descipcion;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDescipcion(String descipcion) {
-        this.descipcion = descipcion;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm") //para darle formato a la fecha
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
@@ -69,33 +79,23 @@ public class Incidencia {
         this.estado = estado;
     }
 
-    public Soporte getSoporte() {
-        return soporte;
-    }
-
-    public void setSoporte(Soporte soporte) {
-        this.soporte = soporte;
-    }
-
-    public Alumno getAlumno() {
-        return alumno;
-    }
-
-    public void setAlumno(Alumno alumno) {
-        this.alumno = alumno;
-    }
-    
     public String getTipo() {
         return tipo;
     }
+
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    public String getSolucion() {
-        return solucion;
+
+    public String getRespuesta() {
+        return respuesta;
     }
-    public void setSolucion(String solucion) {
-        this.solucion = solucion;
+
+    public void setRespuesta(String respuesta) {
+        this.respuesta = respuesta;
     }
+
+
+    
     
 }

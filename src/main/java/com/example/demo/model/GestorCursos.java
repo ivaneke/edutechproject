@@ -1,31 +1,43 @@
 package com.example.demo.model;
 
+
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class GestorCursos {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private String rut;;
     private String nombre;
     private String apellido;
+    private String email;
     private String contrasena;
+    private String activo = "true"; // Por defecto, el gestor de cursos está activo
     
     public GestorCursos() {
-        this.id = 0;
+        this.rut = "";
         this.nombre = "";
+        this.apellido = "";
+        this.email = "";
         this.contrasena = "";
+        this.activo = "true"; // Por defecto, el gestor de cursos está activo
     }
+/*
+    //GestorCursos puede gestionar cursos
+    // Relación uno a muchos entre GestorCursos y Curso
+    // Cada gestor de cursos puede gestionar múltiples cursos
+    @OneToMany(mappedBy="gestorCursos")
+    @JsonBackReference
+    private List<Curso> cursos; 
+*/
+    // Getters y Setters
 
-    public int getId() {
-        return id;
+    
+    public String getRut() {
+        return rut;
     }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setRut(String rut) {
+        this.rut = rut;
     }
 
     public String getNombre() {
@@ -35,13 +47,21 @@ public class GestorCursos {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
+
     public String getApellido() {
         return apellido;
     }
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getContrasena() {
@@ -52,5 +72,12 @@ public class GestorCursos {
         this.contrasena = contrasena;
     }
 
-    
+    public String getActivo() {
+        return activo;
+    }
+
+    public void setActivo(String activo) {
+        this.activo = activo;
+    }
+
 }
