@@ -1,16 +1,16 @@
 package com.example.demo.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.AlumnoDTO;
 import com.example.demo.model.Alumno;
 import com.example.demo.model.Curso;
-import com.example.demo.model.Incidencia;
-import com.example.demo.model.Resena;
 import com.example.demo.repository.AlumnoRepository;
 import com.example.demo.repository.CursoRepository;
-import com.example.demo.repository.IncidenciaRepository;
-import com.example.demo.repository.ResenaRepository;
 
 @Service
 public class AlumnoService {
@@ -42,23 +42,30 @@ public class AlumnoService {
             return "Alumno inscrito al curso correctamente";
         }
     }
-    @Autowired
-    private IncidenciaRepository incidenciaRepository;
 
-//Método para crear una incidencia
+// Método para registrar un alumno
 
-    public String crearIncidencia(Incidencia incidencia) {
-        incidenciaRepository.save(incidencia);
-        return "Incidencia creada correctamente";
+    public String registrarAlumno(Alumno alumno) {
+        if (alumnoRepository.findById(alumno.getRut()).isPresent()) {
+            return "El alumno con RUT " + alumno.getRut() + " ya existe.";
+        }
+
+        alumnoRepository.save(alumno);
+        return "Alumno registrado exitosamente.";
+    }
+//Método para listar alumnos con respectivo DTO que oculta contraseña
+// y devuelve solo los datos necesarios
+    public List<AlumnoDTO> listarAlumnos() {
+        List<Alumno> alumnos = alumnoRepository.findAll();
+        return alumnos.stream()
+                .map(alumno -> new AlumnoDTO(
+                        alumno.getRut(),
+                        alumno.getNombre(),
+                        alumno.getApellido(),
+                        alumno.getCursos()
+                )).collect(Collectors.toList());
     }
 
-    @Autowired
-    private ResenaRepository resenaRepository;
 
-//Método para dejar una reseña
 
-    public String dejarResena(Resena resena) {
-        resenaRepository.save(resena);
-        return "Reseña creada correctamente";
-    }
 }
