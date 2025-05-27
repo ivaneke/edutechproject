@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.model.GestorCursos;
 
-public interface GestorCursosRepository extends JpaRepository<GestorCursos, Integer> {
+public interface GestorCursosRepository extends JpaRepository<GestorCursos, String> {
     
 
 }

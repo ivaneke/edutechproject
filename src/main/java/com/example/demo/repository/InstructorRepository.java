@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.model.Instructor;
 
-public interface InstructorRepository extends JpaRepository<Instructor, Integer>{
+public interface InstructorRepository extends JpaRepository<Instructor, String>{
 
 }
